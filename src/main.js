@@ -43,3 +43,24 @@ if (form) {
 }
 
 createHtml(tasks);
+
+function sortTasks() {
+  tasks.sort((a, b) => {
+    const titleA = a.title.toUpperCase(); // ignore upper and lowercase
+    const titleB = b.title.toUpperCase(); // ignore upper and lowercase
+    if (titleA < titleB) {
+      return -1;
+    }
+    if (titleA > titleB) {
+      return 1;
+    }
+
+    return 0;
+  });
+
+  createHtml(tasks);
+}
+
+const sortTaskButton = document.getElementById("sort-btn");
+
+sortTaskButton.addEventListener("click", sortTasks);
