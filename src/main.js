@@ -2,20 +2,16 @@ import { Task } from "./models/Task";
 import "./style.css";
 import { createHtml } from "./utilities";
 
-const tasksOG = [
-  new Task("Test", "2025-01-01", "Low Priority"),
-  new Task("Test", "2025-01-01", "Low Priority"),
-  new Task("Test", "2025-01-01", "Low Priority"),
-];
-
 let tasks = [];
+let finishedTasks = [];
 
 const tasksFromLs = localStorage.getItem("task");
-if (tasksFromLs === null) {
-  tasks = tasksOG;
-} else {
-  tasks = JSON.parse(tasksFromLs);
-}
+
+tasks = JSON.parse(tasksFromLs);
+
+const finishedTasksFromLs = localStorage.getItem("finishedTask");
+
+finishedTasks = JSON.parse(finishedTasksFromLs);
 
 function handleSubmit(e) {
   e.preventDefault();
@@ -33,7 +29,7 @@ function handleSubmit(e) {
 
   localStorage.setItem("task", JSON.stringify(tasks));
 
-  createHtml(tasks);
+  createHtml(tasks, finishedTasks);
 }
 
 const form = document.getElementById("form");
@@ -42,8 +38,7 @@ if (form) {
   form.addEventListener("submit", handleSubmit);
 }
 
-createHtml(tasks);
-
+// funktion för att sortera uppgifternas titlar i alfabetisk ordning från A till Ö
 function sortTasks() {
   tasks.sort((a, b) => {
     const titleA = a.title.toUpperCase(); // ignore upper and lowercase
@@ -58,9 +53,39 @@ function sortTasks() {
     return 0;
   });
 
-  createHtml(tasks);
+  createHtml(tasks, finishedTasks);
 }
 
 const sortTaskButton = document.getElementById("sort-btn");
 
 sortTaskButton.addEventListener("click", sortTasks);
+
+// funktion för att flytta en uppgift till avklarade uppgifter
+export function moveTaskToFinished(i) {
+  const taskToMove = tasks[i];
+
+  tasks.splice(i, 1);
+
+  finishedTasks.push(taskToMove);
+
+  localStorage.setItem("task", JSON.stringify(tasks));
+  localStorage.setItem("finishedTask", JSON.stringify(finishedTasks));
+
+  createHtml(tasks, finishedTasks);
+}
+
+// funktion för att flytta tillbaka en avklarad uppgift till to-do listan
+export function moveTaskBackToDo(i) {
+  const taskToMove = finishedTasks[i];
+
+  finishedTasks.splice(i, 1);
+
+  tasks.push(taskToMove);
+
+  localStorage.setItem("task", JSON.stringify(tasks));
+  localStorage.setItem("finishedTask", JSON.stringify(finishedTasks));
+
+  createHtml(tasks, finishedTasks);
+}
+
+createHtml(tasks, finishedTasks);
