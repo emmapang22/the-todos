@@ -73,7 +73,11 @@ export const createHtml = (tasks, finishedTasks) => {
       "cursor-pointer"
     );
 
-    trashcan.addEventListener("click", deleteFromTasks);
+    trashcan.addEventListener("click", () => {
+      if (trashcan) {
+        deleteFromTasks(i);
+      }
+    });
 
     details.classList.add(
       "flex",
@@ -197,7 +201,11 @@ function createHtmlFinishedTask(finishedTasks) {
       "cursor-pointer"
     );
 
-    trashcan.addEventListener("click", deleteFromFinishedTasks);
+    trashcan.addEventListener("click", () => {
+      if (trashcan) {
+        deleteFromFinishedTasks(i);
+      }
+    });
 
     details.classList.add(
       "flex",
