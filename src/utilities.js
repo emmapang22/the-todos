@@ -1,4 +1,9 @@
-import { moveTaskBackToDo, moveTaskToFinished } from "./main";
+import {
+  deleteFromFinishedTasks,
+  deleteFromTasks,
+  moveTaskBackToDo,
+  moveTaskToFinished,
+} from "./main";
 
 export const createHtml = (tasks, finishedTasks) => {
   // Hitta den <section> som har id:t to-do-container
@@ -14,7 +19,9 @@ export const createHtml = (tasks, finishedTasks) => {
     const li = document.createElement("li");
     const checkbox = document.createElement("input");
     const info = document.createElement("div");
+    const topRow = document.createElement("div");
     const title = document.createElement("h3");
+    const trashcan = document.createElement("i");
     const details = document.createElement("div");
     const deadline = document.createElement("p");
     const priority = document.createElement("p");
@@ -25,7 +32,7 @@ export const createHtml = (tasks, finishedTasks) => {
       "flex",
       "flex-row",
       "bg-gray-400",
-      "py-2",
+      "py-3",
       "px-4",
       "gap-4",
       "rounded-md"
@@ -44,10 +51,30 @@ export const createHtml = (tasks, finishedTasks) => {
       "flex-col",
       "justify-between",
       "w-full",
-      "text-black"
+      "text-black",
+      "gap-2"
     );
+
+    topRow.classList.add(
+      "flex",
+      "flex-row",
+      "justify-between",
+      "items-center",
+      "w-full"
+    );
+
     title.innerHTML = task.title;
     title.classList.add("text-lg", "font-bold");
+
+    trashcan.classList.add(
+      "fa-solid",
+      "fa-trash-can",
+      "text-lg",
+      "cursor-pointer"
+    );
+
+    trashcan.addEventListener("click", deleteFromTasks);
+
     details.classList.add(
       "flex",
       "flex-row",
@@ -56,6 +83,11 @@ export const createHtml = (tasks, finishedTasks) => {
       "items-center"
     );
     deadline.innerHTML = "Deadline: " + task.deadline;
+
+    if (task.deadline === "") {
+      deadline.innerHTML = "Deadline: None";
+    }
+
     priority.innerHTML = task.priority;
 
     if (task.priority === "High Priority") {
@@ -78,7 +110,9 @@ export const createHtml = (tasks, finishedTasks) => {
     sectionToDo.appendChild(li);
     li.appendChild(checkbox);
     li.appendChild(info);
-    info.appendChild(title);
+    info.appendChild(topRow);
+    topRow.appendChild(title);
+    topRow.appendChild(trashcan);
     info.appendChild(details);
     details.appendChild(deadline);
     details.appendChild(priority);
@@ -87,7 +121,7 @@ export const createHtml = (tasks, finishedTasks) => {
   createHtmlFinishedTask(finishedTasks);
 };
 
-export function createHtmlFinishedTask(finishedTasks) {
+function createHtmlFinishedTask(finishedTasks) {
   // Hitta den <section> som har id:t finished-tasks-container.
   const sectionFinishedTasks = document.getElementById(
     "finished-tasks-container"
@@ -103,7 +137,9 @@ export function createHtmlFinishedTask(finishedTasks) {
     const li = document.createElement("li");
     const checkbox = document.createElement("input");
     const info = document.createElement("div");
+    const topRow = document.createElement("div");
     const title = document.createElement("h3");
+    const trashcan = document.createElement("i");
     const details = document.createElement("div");
     const deadline = document.createElement("p");
     const priority = document.createElement("p");
@@ -134,10 +170,31 @@ export function createHtmlFinishedTask(finishedTasks) {
       "flex-col",
       "justify-between",
       "w-full",
-      "text-gray-300"
+      "text-gray-300",
+      "gap-2"
     );
+
+    topRow.classList.add(
+      "flex",
+      "flex-row",
+      "justify-between",
+      "items-center",
+      "w-full"
+    );
+
     title.innerHTML = finishedTask.title;
+
     title.classList.add("text-lg", "font-bold", "line-through");
+
+    trashcan.classList.add(
+      "fa-solid",
+      "fa-trash-can",
+      "text-lg",
+      "cursor-pointer"
+    );
+
+    trashcan.addEventListener("click", deleteFromFinishedTasks);
+
     details.classList.add(
       "flex",
       "flex-row",
@@ -146,6 +203,7 @@ export function createHtmlFinishedTask(finishedTasks) {
       "items-center"
     );
     deadline.innerHTML = "Deadline: " + finishedTask.deadline;
+
     priority.innerHTML = finishedTask.priority;
     priority.classList.add(
       "bg-gray-800",
@@ -160,7 +218,9 @@ export function createHtmlFinishedTask(finishedTasks) {
     sectionFinishedTasks.appendChild(li);
     li.appendChild(checkbox);
     li.appendChild(info);
-    info.appendChild(title);
+    info.appendChild(topRow);
+    topRow.appendChild(title);
+    topRow.appendChild(trashcan);
     info.appendChild(details);
     details.appendChild(deadline);
     details.appendChild(priority);

@@ -2,12 +2,22 @@ import { Task } from "./models/Task";
 import "./style.css";
 import { createHtml } from "./utilities";
 
+const tasksOG = [
+  new Task("Laga middag", "2025-11-01", "Medium Priority"),
+  new Task("Tvätta kläderna", "2025-11-02", "High Priority"),
+  new Task("Ladda eltandborsten", "2025-11-03", "Low Priority"),
+];
+
 let tasks = [];
-let finishedTasks = [];
 
 const tasksFromLs = localStorage.getItem("task");
+if (tasksFromLs === null || []) {
+  tasks = tasksOG;
+} else {
+  tasks = JSON.parse(tasksFromLs);
+}
 
-tasks = JSON.parse(tasksFromLs);
+let finishedTasks = [];
 
 const finishedTasksFromLs = localStorage.getItem("finishedTask");
 
@@ -59,6 +69,24 @@ function sortTasks() {
 const sortTaskButton = document.getElementById("sort-btn");
 
 sortTaskButton.addEventListener("click", sortTasks);
+
+// funktion för att radera en to-do uppgift från listan
+export function deleteFromTasks(i) {
+  tasks.splice(i, 1);
+
+  localStorage.setItem("task", JSON.stringify(tasks));
+
+  createHtml(tasks, finishedTasks);
+}
+
+// funktion för att radera en avklarad uppgift från listan
+export function deleteFromFinishedTasks(i) {
+  finishedTasks.splice(i, 1);
+
+  localStorage.setItem("task", JSON.stringify(finishedTasks));
+
+  createHtml(tasks, finishedTasks);
+}
 
 // funktion för att flytta en uppgift till avklarade uppgifter
 export function moveTaskToFinished(i) {
