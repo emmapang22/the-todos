@@ -77,10 +77,14 @@ export const createHtml = (tasks, finishedTasks) => {
 
     details.classList.add(
       "flex",
-      "flex-row",
-      "gap-4",
-      "justify-between",
-      "items-center"
+      "flex-col",
+      "gap-1",
+      "justify-start",
+      "items-start",
+      "lg:flex-row",
+      "lg:gap-4",
+      "lg:justify-between",
+      "lg:items-center"
     );
     deadline.innerHTML = "Deadline: " + task.deadline;
 
@@ -150,7 +154,7 @@ function createHtmlFinishedTask(finishedTasks) {
       "flex",
       "flex-row",
       "bg-gray-700",
-      "py-2",
+      "py-3",
       "px-4",
       "gap-4",
       "rounded-md"
@@ -197,12 +201,21 @@ function createHtmlFinishedTask(finishedTasks) {
 
     details.classList.add(
       "flex",
-      "flex-row",
-      "gap-4",
-      "justify-between",
-      "items-center"
+      "flex-col",
+      "gap-1",
+      "justify-start",
+      "items-start",
+      "lg:flex-row",
+      "lg:gap-4",
+      "lg:justify-between",
+      "lg:items-center"
     );
+
     deadline.innerHTML = "Deadline: " + finishedTask.deadline;
+
+    if (finishedTask.deadline === "") {
+      deadline.innerHTML = "Deadline: None";
+    }
 
     priority.innerHTML = finishedTask.priority;
     priority.classList.add(

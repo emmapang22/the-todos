@@ -13,6 +13,7 @@
     <section
       class="container flex flex-col lg:flex-row max-w-7xl mt-0 mb-10 mx-auto gap-4 w-full px-5"
     >
+      <!-- formulär -->
       <form
         id="form"
         class="flex flex-col gap-0.3 bg-form p-8 rounded-lg w-full lg:w-1/3"
@@ -41,18 +42,34 @@
           Add task
         </button>
       </form>
+
+      <!-- sektion för både to-do listan och avklarade uppgifter -->
       <div class="flex flex-col md:flex-row gap-4 w-full">
+        <!-- to-do listan -->
         <section id="to-do" class="w-full md:w-1/2 lg:w-1/2">
           <div class="flex flex-row justify-between items-center mb-4">
             <h2 class="text-2xl md:text-4xl">To-Do List</h2>
-            <i
-              id="sort-btn"
-              class="fa-solid fa-arrow-up-a-z text-2xl cursor-pointer"
-            ></i>
+            <div class="flex flex-row gap-3 items-center">
+              <i
+                id="by-priority-btn"
+                class="fa-solid fa-list-ol text-2xl cursor-pointer"
+              ></i>
+
+              <i
+                id="by-date-btn"
+                class="fa-solid fa-calendar-days text-2xl cursor-pointer"
+              ></i>
+
+              <i
+                id="by-alphabet-btn"
+                class="fa-solid fa-arrow-up-a-z text-2xl cursor-pointer"
+              ></i>
+            </div>
           </div>
           <ul id="to-do-container"></ul>
         </section>
 
+        <!-- avklarade uppgifter listan -->
         <section id="finished-tasks" class="w-full md:w-1/2 lg:w-1/2">
           <div class="flex flex-row justify-between items-center mb-4">
             <h2 class="text-2xl md:text-4xl">Finished Tasks</h2>
