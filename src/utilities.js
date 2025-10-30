@@ -21,7 +21,7 @@ export const createHtml = (tasks, finishedTasks) => {
     const info = document.createElement("div");
     const topRow = document.createElement("div");
     const title = document.createElement("h3");
-    const trashcan = document.createElement("i");
+    const trashcan = document.createElement("button");
     const details = document.createElement("div");
     const deadline = document.createElement("p");
     const priority = document.createElement("p");
@@ -70,7 +70,8 @@ export const createHtml = (tasks, finishedTasks) => {
       "fa-solid",
       "fa-trash-can",
       "text-lg",
-      "cursor-pointer"
+      "cursor-pointer",
+      "hover:text-red-800"
     );
 
     trashcan.addEventListener("click", () => {
@@ -147,7 +148,7 @@ function createHtmlFinishedTask(finishedTasks) {
     const info = document.createElement("div");
     const topRow = document.createElement("div");
     const title = document.createElement("h3");
-    const trashcan = document.createElement("i");
+    const trashcan = document.createElement("button");
     const details = document.createElement("div");
     const deadline = document.createElement("p");
     const priority = document.createElement("p");
@@ -198,7 +199,8 @@ function createHtmlFinishedTask(finishedTasks) {
       "fa-solid",
       "fa-trash-can",
       "text-lg",
-      "cursor-pointer"
+      "cursor-pointer",
+      "hover:text-red-500"
     );
 
     trashcan.addEventListener("click", () => {
