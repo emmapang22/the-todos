@@ -115,7 +115,7 @@ export function deleteFromTasks(i) {
 export function deleteFromFinishedTasks(i) {
   finishedTasks.splice(i, 1);
 
-  localStorage.setItem("task", JSON.stringify(finishedTasks));
+  localStorage.setItem("finishedTask", JSON.stringify(finishedTasks));
 
   createHtml(tasks, finishedTasks);
 }
