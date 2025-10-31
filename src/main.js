@@ -33,6 +33,11 @@ function handleSubmit(e) {
   document.getElementById("title").value = "";
   document.getElementById("deadline").value = "";
 
+  if (title === "") {
+    alert("Write something as the title");
+    return false;
+  }
+
   const newTask = new Task(title, deadline, priority);
 
   tasks.push(newTask);

@@ -31,7 +31,7 @@ export const createHtml = (tasks, finishedTasks) => {
       "task",
       "flex",
       "flex-row",
-      "bg-gray-400",
+      "bg-zinc-800",
       "py-3",
       "px-4",
       "gap-4",
@@ -51,7 +51,6 @@ export const createHtml = (tasks, finishedTasks) => {
       "flex-col",
       "justify-between",
       "w-full",
-      "text-black",
       "gap-2"
     );
 
@@ -71,7 +70,7 @@ export const createHtml = (tasks, finishedTasks) => {
       "fa-trash-can",
       "text-lg",
       "cursor-pointer",
-      "hover:text-red-800"
+      "hover:text-red-500"
     );
 
     trashcan.addEventListener("click", () => {
@@ -158,7 +157,7 @@ function createHtmlFinishedTask(finishedTasks) {
       "task",
       "flex",
       "flex-row",
-      "bg-gray-700",
+      "bg-zinc-700",
       "py-3",
       "px-4",
       "gap-4",
@@ -179,7 +178,7 @@ function createHtmlFinishedTask(finishedTasks) {
       "flex-col",
       "justify-between",
       "w-full",
-      "text-gray-300",
+      "text-zinc-300",
       "gap-2"
     );
 
@@ -229,7 +228,7 @@ function createHtmlFinishedTask(finishedTasks) {
 
     priority.innerHTML = finishedTask.priority;
     priority.classList.add(
-      "bg-gray-800",
+      "bg-zinc-800",
       "py-1",
       "px-4",
       "rounded-full",
