@@ -3,7 +3,7 @@ export class Task {
   deadline;
   priority;
 
-  constructor(title, deadline, priority) {
+  constructor(title: string, deadline: string, priority: string) {
     this.title = title;
     this.deadline = deadline;
     this.priority = priority;
