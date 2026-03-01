@@ -1,22 +1,24 @@
-import { Task } from "./models/Task";
-import { createHtmlFinishedTask } from "./components/createHtmlFinishedTask";
-import { createHtmlNewTask } from "./components/createHtmlNewTask";
+import { Task } from "../models/Task";
+import { createHtmlFinishedTask } from "../utils/createHtml/createHtmlFinishedTask";
+import { createHtmlNewTask } from "../utils/createHtml/createHtmlNewTask";
 
-export function form(tasks: Task[], finishedTasks: Task[]) {
+export const processFormDataInput = (tasks: Task[], finishedTasks: Task[]) => {
   const title = (document.getElementById("title") as HTMLInputElement).value;
+
+  if (!title) {
+    alert("Write something as the title");
+    return false;
+  }
+
   const deadline = (document.getElementById("deadline") as HTMLInputElement)
     .value;
+
   const priority = (
     document.getElementById("select-priority") as HTMLSelectElement
   ).value;
 
   (document.getElementById("title") as HTMLInputElement).value = "";
   (document.getElementById("deadline") as HTMLInputElement).value = "";
-
-  if (title === "") {
-    alert("Write something as the title");
-    return false;
-  }
 
   const newTask = new Task(title, deadline, priority);
 
@@ -26,4 +28,4 @@ export function form(tasks: Task[], finishedTasks: Task[]) {
 
   createHtmlNewTask(tasks, finishedTasks);
   createHtmlFinishedTask(finishedTasks, tasks);
-}
+};

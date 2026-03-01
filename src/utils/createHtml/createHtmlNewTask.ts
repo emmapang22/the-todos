@@ -1,21 +1,20 @@
-import { Task } from "../models/Task";
-import { deleteFinishedTask } from "../utils/deleteTaskUtils/deleteFinishedTask";
-import { moveBackToNewTasks } from "../utils/moveTaskUtils/moveBackToNewTasks";
+import { Task } from "../../models/Task";
+import { deleteNewTask } from "../deleteTaskUtils/deleteNewTask";
+import { moveToFinishedTasks } from "../moveTaskUtils/moveToFinishedTasks";
 
-export function createHtmlFinishedTask(finishedTasks: Task[], tasks: Task[]) {
-  // Hitta den <section> som har id:t finished-tasks-container.
-  const sectionFinishedTasks = document.getElementById(
-    "finished-tasks-container",
-  ) as HTMLElement;
+export const createHtmlNewTask = (tasks: Task[], finishedTasks: Task[]) => {
+  const sectionToDo = document.getElementById("to-do-container") as HTMLElement;
 
-  sectionFinishedTasks.classList.add("flex", "flex-col", "gap-2");
+  if (!sectionToDo) {
+    console.error("Could not find to-do-container element");
+    return;
+  }
 
-  // Töm <section> på innehåll (den gamla listan)
-  sectionFinishedTasks.innerHTML = "";
+  sectionToDo?.classList.add("flex", "flex-col", "gap-2");
 
-  // Loopa igenom den nya listan
-  finishedTasks.forEach((finishedTask, i) => {
-    // Skapa element
+  sectionToDo.innerHTML = "";
+
+  tasks.forEach((task, i) => {
     const li = document.createElement("li");
     const checkbox = document.createElement("input");
     const info = document.createElement("div");
@@ -26,24 +25,14 @@ export function createHtmlFinishedTask(finishedTasks: Task[], tasks: Task[]) {
     const deadline = document.createElement("p");
     const priority = document.createElement("p");
 
-    // Fyll på med information i elementen
-    li.classList.add(
-      "task",
-      "flex",
-      "flex-row",
-      "bg-zinc-700",
-      "py-3",
-      "px-4",
-      "gap-4",
-      "rounded-md",
-    );
+    li.className = "task flex flex-row bg-zinc-800 py-3 px-4 gap-4 rounded-md";
+
     checkbox.type = "checkbox";
     checkbox.name = "checkbox";
     checkbox.className = "checkbox";
-    checkbox.checked = true;
-    checkbox.addEventListener("click", () => {
-      if (!checkbox.checked) {
-        moveBackToNewTasks(tasks, finishedTasks, i);
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        moveToFinishedTasks(tasks, finishedTasks, i);
       }
     });
 
@@ -52,7 +41,6 @@ export function createHtmlFinishedTask(finishedTasks: Task[], tasks: Task[]) {
       "flex-col",
       "justify-between",
       "w-full",
-      "text-zinc-300",
       "gap-2",
     );
 
@@ -64,9 +52,8 @@ export function createHtmlFinishedTask(finishedTasks: Task[], tasks: Task[]) {
       "w-full",
     );
 
-    title.innerHTML = finishedTask.title;
-
-    title.classList.add("text-lg", "font-bold", "line-through");
+    title.innerHTML = task.title;
+    title.classList.add("text-lg", "font-bold");
 
     trashcan.classList.add(
       "fa-solid",
@@ -78,7 +65,7 @@ export function createHtmlFinishedTask(finishedTasks: Task[], tasks: Task[]) {
 
     trashcan.addEventListener("click", () => {
       if (trashcan) {
-        deleteFinishedTask(tasks, finishedTasks, i);
+        deleteNewTask(tasks, finishedTasks, i);
       }
     });
 
@@ -94,15 +81,23 @@ export function createHtmlFinishedTask(finishedTasks: Task[], tasks: Task[]) {
       "lg:items-center",
     );
 
-    deadline.innerHTML = "Deadline: " + finishedTask.deadline;
+    deadline.innerHTML = "Deadline: " + task.deadline;
 
-    if (finishedTask.deadline === "") {
+    if (task.deadline === "") {
       deadline.innerHTML = "Deadline: None";
     }
 
-    priority.innerHTML = finishedTask.priority;
+    priority.innerHTML = task.priority;
+
+    if (task.priority === "High Priority") {
+      priority.classList.add("bg-red-700", "text-white");
+    } else if (task.priority === "Medium Priority") {
+      priority.classList.add("bg-yellow-500", "text-black");
+    } else {
+      priority.classList.add("bg-sky-600", "text-white");
+    }
+
     priority.classList.add(
-      "bg-zinc-800",
       "py-1",
       "px-4",
       "rounded-full",
@@ -110,8 +105,7 @@ export function createHtmlFinishedTask(finishedTasks: Task[], tasks: Task[]) {
       "text-sm",
     );
 
-    // Lägg till elementen
-    sectionFinishedTasks?.appendChild(li);
+    sectionToDo?.appendChild(li);
     li.appendChild(checkbox);
     li.appendChild(info);
     info.appendChild(topRow);
@@ -121,4 +115,4 @@ export function createHtmlFinishedTask(finishedTasks: Task[], tasks: Task[]) {
     details.appendChild(deadline);
     details.appendChild(priority);
   });
-}
+};

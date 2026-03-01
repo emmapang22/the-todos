@@ -1,13 +1,14 @@
-import { createHtmlFinishedTask } from "../../components/createHtmlFinishedTask";
-import { createHtmlNewTask } from "../../components/createHtmlNewTask";
 import { Task } from "../../models/Task";
+import { createHtmlFinishedTask } from "../createHtml/createHtmlFinishedTask";
+import { createHtmlNewTask } from "../createHtml/createHtmlNewTask";
 
 // funktion för att sortera uppgifternas titlar i alfabetisk ordning från A till Ö
-export function sortAlphabetically(tasks: Task[], finishedTasks: Task[]) {
+export const sortAlphabetically = (tasks: Task[], finishedTasks: Task[]) => {
   document.getElementById("by-alphabet-btn")?.addEventListener("click", () => {
     tasks.sort((a, b) => {
-      const titleA = a.title.toUpperCase(); // ignore upper and lowercase
-      const titleB = b.title.toUpperCase(); // ignore upper and lowercase
+      const titleA = a.title.toLowerCase();
+      const titleB = b.title.toLowerCase();
+
       if (titleA < titleB) {
         return -1;
       }
@@ -21,4 +22,4 @@ export function sortAlphabetically(tasks: Task[], finishedTasks: Task[]) {
     createHtmlNewTask(tasks, finishedTasks);
     createHtmlFinishedTask(finishedTasks, tasks);
   });
-}
+};

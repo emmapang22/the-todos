@@ -1,13 +1,13 @@
-import { createHtmlFinishedTask } from "../../components/createHtmlFinishedTask";
-import { createHtmlNewTask } from "../../components/createHtmlNewTask";
 import { Task } from "../../models/Task";
+import { createHtmlFinishedTask } from "../createHtml/createHtmlFinishedTask";
+import { createHtmlNewTask } from "../createHtml/createHtmlNewTask";
 
 // funktion för att flytta en uppgift till avklarade uppgifter
-export function moveToFinishedTasks(
+export const moveToFinishedTasks = (
   tasks: Task[],
   finishedTasks: Task[],
   i: any,
-) {
+) => {
   const taskToMove = tasks[i];
 
   tasks.splice(i, 1);
@@ -19,4 +19,4 @@ export function moveToFinishedTasks(
 
   createHtmlNewTask(tasks, finishedTasks);
   createHtmlFinishedTask(finishedTasks, tasks);
-}
+};

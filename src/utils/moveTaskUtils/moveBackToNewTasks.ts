@@ -1,13 +1,13 @@
-import { createHtmlFinishedTask } from "../../components/createHtmlFinishedTask";
-import { createHtmlNewTask } from "../../components/createHtmlNewTask";
 import { Task } from "../../models/Task";
+import { createHtmlFinishedTask } from "../createHtml/createHtmlFinishedTask";
+import { createHtmlNewTask } from "../createHtml/createHtmlNewTask";
 
 // funktion för att flytta tillbaka en avklarad uppgift till to-do listan
-export function moveBackToNewTasks(
+export const moveBackToNewTasks = (
   tasks: Task[],
   finishedTasks: Task[],
   i: any,
-) {
+) => {
   const taskToMove = finishedTasks[i];
 
   finishedTasks.splice(i, 1);
@@ -19,4 +19,4 @@ export function moveBackToNewTasks(
 
   createHtmlNewTask(tasks, finishedTasks);
   createHtmlFinishedTask(finishedTasks, tasks);
-}
+};
