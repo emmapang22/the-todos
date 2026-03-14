@@ -38,7 +38,7 @@ export const createHtmlFinishedTask = (
 
     checkbox.type = "checkbox";
     checkbox.name = "checkbox";
-    checkbox.className = "checkbox";
+    checkbox.className = "checkbox hover:cursor-pointer";
     checkbox.checked = true;
     checkbox.addEventListener("click", () => {
       if (!checkbox.checked) {

@@ -29,7 +29,7 @@ export const createHtmlNewTask = (tasks: Task[], finishedTasks: Task[]) => {
 
     checkbox.type = "checkbox";
     checkbox.name = "checkbox";
-    checkbox.className = "checkbox";
+    checkbox.className = "checkbox hover:cursor-pointer";
     checkbox.addEventListener("change", () => {
       if (checkbox.checked) {
         moveToFinishedTasks(tasks, finishedTasks, i);
